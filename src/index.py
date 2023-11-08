@@ -65,6 +65,7 @@ def main():
     add_or_remove("Olutvarasto", olutta, "ota", 1000.0)
 
     add_or_remove("Mehuvarasto", mehua, "ota", -32.9)
+    print("lisätään tänne liian pitkä rivi, jotta Github actions varoittaa Pylint -virheestä. Vielasdkjdjflkdsjflkajlfkjasfjalskfjsafsfa")
 
 
 if __name__ == "__main__":
