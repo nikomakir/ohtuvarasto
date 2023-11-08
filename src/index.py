@@ -1,10 +1,7 @@
 from varasto import Varasto
 
 
-def main():
-    mehua = Varasto(100.0)
-    olutta = Varasto(100.0, 20.2)
-
+def start(mehua, olutta):
     print("Luonnin jälkeen:")
     print(f"Mehuvarasto: {mehua}")
     print(f"Olutvarasto: {olutta}")
@@ -22,36 +19,52 @@ def main():
     mehua.ota_varastosta(3.14)
     print(f"Mehuvarasto: {mehua}")
 
+def errors(tilavuus, alkusaldo=None):
+    huono = Varasto(tilavuus)
+    if not alkusaldo:
+        print(f"Varasto({tilavuus});")
+    else:
+        print(f"Varasto({tilavuus}, {alkusaldo})")
+    print(huono)
+
+def add_or_remove(varastotyyppi, varasto, toimenpide, maara):
+    print(f"{varastotyyppi}: {varasto}")
+
+    if varastotyyppi == "Olutvarasto":
+        if toimenpide == "lisaa":
+            print(f"olutta.lisaa_varastoon({maara})")
+            varasto.lisaa_varastoon(maara)
+        elif toimenpide == "ota":
+            print(f"""olutta.ota_varastosta({maara})
+                  saatiin {varasto.ota_varastosta(maara)}""")
+
+    elif varastotyyppi == "Mehuvarasto":
+        if toimenpide == "lisaa":
+            print(f"mehua.lisaa_varastoon({maara})")
+            varasto.lisaa_varastoon(maara)
+        elif toimenpide == "ota":
+            print(f"""mehua.otaVarastosta({maara})
+                  saatiin {varasto.ota_varastosta(maara)}""")
+
+    print(f"{varastotyyppi}: {varasto}")
+
+def main():
+    mehua = Varasto(100.0)
+    olutta = Varasto(100.0, 20.2)
+
+    start(mehua, olutta)
+
     print("Virhetilanteita:")
-    print("Varasto(-100.0);")
-    huono = Varasto(-100.0)
-    print(huono)
+    errors(-100.0)
+    errors(100.0, -50.7)
 
-    print("Varasto(100.0, -50.7)")
-    huono = Varasto(100.0, -50.7)
-    print(huono)
+    add_or_remove("Olutvarasto", olutta, "lisaa", 1000.0)
 
-    print(f"Olutvarasto: {olutta}")
-    print("olutta.lisaa_varastoon(1000.0)")
-    olutta.lisaa_varastoon(1000.0)
-    print(f"Olutvarasto: {olutta}")
+    add_or_remove("Mehuvarasto", mehua, "lisaa", -666.0)
 
-    print(f"Mehuvarasto: {mehua}")
-    print("mehua.lisaa_varastoon(-666.0)")
-    mehua.lisaa_varastoon(-666.0)
-    print(f"Mehuvarasto: {mehua}")
+    add_or_remove("Olutvarasto", olutta, "ota", 1000.0)
 
-    print(f"Olutvarasto: {olutta}")
-    print("olutta.ota_varastosta(1000.0)")
-    saatiin = olutta.ota_varastosta(1000.0)
-    print(f"saatiin {saatiin}")
-    print(f"Olutvarasto: {olutta}")
-
-    print(f"Mehuvarasto: {mehua}")
-    print("mehua.otaVarastosta(-32.9)")
-    saatiin = mehua.ota_varastosta(-32.9)
-    print(f"saatiin {saatiin}")
-    print(f"Mehuvarasto: {mehua}")
+    add_or_remove("Mehuvarasto", mehua, "ota", -32.9)
 
 
 if __name__ == "__main__":
